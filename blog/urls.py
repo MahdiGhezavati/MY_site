@@ -4,5 +4,5 @@ from blog.views import *
 app_name = "blog"
 urlpatterns = [
     path("" , blog_page, name='index'),
-    path("/single" , single_page ,name= 'single'),
+    path("<int:pid>" , single_page ,name= 'single'),
 ]
