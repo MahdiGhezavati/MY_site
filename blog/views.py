@@ -10,15 +10,17 @@ def blog_page(request):
 
 def single_page(request , pid):
     #post = Post.objects.get(id = pid)
-    post = get_object_or_404(Post , pk=pid)
-    context = {"post":post}
+    post = get_object_or_404(Post , pk=pid , status = 1)
+    def addview(post):
+        post.content_view += 1
+        return post.save() 
+    addview(post)
+    context = {"post":post} 
     return render(request, "blog/blog-single.html" , context)
 
-def test(request,pid):
+def test(request):
     #post = Post.objects.get(id = pid)
-    post = get_object_or_404(Post , pk=pid)
-    context = {"post":post}
-    return render(request , "blog/test.html")
-
-
+    post =  Post.objects.filter(status=1)
+    context = {"posts":post}
+    return render(request , "blog/test.html" , context)
 

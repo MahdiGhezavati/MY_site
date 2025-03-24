@@ -11,8 +11,10 @@
 </head>
 
 <body>
-    <p>{{post.title}}</p>
-    
+    <h1>hi</h1>
+    {% for post in posts %}
+    <p>{{post.content_view}}</p>
+    {%endfor%}
 </body>
 
 </html>
