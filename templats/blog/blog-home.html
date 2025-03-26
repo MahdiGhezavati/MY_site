@@ -99,13 +99,18 @@
 							<li><a ></a>{{cat.name}}</li>
 							{% endfor %}
 							   -->
-							<!--best way-->
+							<!--best way --
 							{{ post.category.all|join:" , "}}
+						       -->
+							<!--legendery way-->
+							{% for cat in post.category.all %}
+					        	<a class="tags" href="#">{{cat.name}}</a> {% if not forloop.last %},{% endif %}
+							{% endfor %}
 						</ul>
 						<div class="user-details row">
 							<p class="user-name col-lg-12 col-md-12 col-6"><a href="#">{{post.author}}</a> <span
 									class="lnr lnr-user"></span></p>
-							<p class="date col-lg-12 col-md-12 col-6"><a href="#">{{post.poblished_date}}</a> <span
+							<p class="date col-lg-12 col-md-12 col-6"><a href="#">{{post.poblished_date|date:"SHORT_DATE_FORMAT"}}</a> <span
 									class="lnr lnr-calendar-full"></span></p>
 							<p class="view col-lg-12 col-md-12 col-6"><a href="#">{{post.content_view}} Views</a> <span
 									class="lnr lnr-eye"></span></p>
@@ -161,7 +166,7 @@
 						</form>
 					</div>
 					<div class="single-sidebar-widget user-info-widget">
-						<img src="{% static 'blog/user-info.png}" alt="">
+						<img src="{% static 'img/blog/user-info.png' %}" alt="">
 						<a href="#">
 							<h4>Charlie Barber</h4>
 						</a>
