@@ -1,14 +1,13 @@
 from django.shortcuts import render , get_object_or_404
 from django.http import HttpResponse
 from blog.models import Post
-from datetime import datetime
+from django.utils import timezone
+
 # code for get time and use in blog_page
-time_now = datetime.now()
-
-
 
 def blog_page(request):
-    posts = Post.objects.filter(poblished_date__lte=time_now)
+    time_now=timezone.localtime(timezone.now())
+    posts = Post.objects.filter(poblished_date__lte=time_now , status = 1 ) 
     context = {"posts":posts}
     return render(request, "blog/blog-home.html" , context)
 
