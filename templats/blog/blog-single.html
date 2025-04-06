@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load blog_tags %}
 {% block body %}
 <!-- start banner Area -->
 <section class="relative about-banner">
@@ -251,7 +252,7 @@
 
 					{% include "blog/sidebar/writer-user.html" %}
 
-					{% include "blog/sidebar/popular_post.html" %}
+					{% latesposts %}
 					{% include "blog/sidebar/ads.html" %}
 					{% include "blog/sidebar/category.html" %}
 					{% include "blog/sidebar/newsletter.html" %}
