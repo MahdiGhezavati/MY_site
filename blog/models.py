@@ -8,7 +8,6 @@ class category(models.Model):
     def __str__(self):
         return self.name
 
-
 class Post(models.Model):
     author = models.ForeignKey(User , on_delete=models.SET_NULL,null=True)
     image  = models.ImageField(upload_to="media/blog" , default="media/blog/default.jpg")
@@ -21,6 +20,12 @@ class Post(models.Model):
     poblished_date = models.DateTimeField(null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
+    # filter for content of post with word 
+    def snippet(self):
+        listk=self.content.split(" ")
+        listk=listk[:5]
+        return " ".join(map(str , listk)) + ". . ."
+
 
     class Meta:
         ordering = ["created_date"]

@@ -5,5 +5,7 @@ app_name = "website"
 urlpatterns = [
     path("" , home_page, name="Index"),
     path("about-me" , about_page ,name= "About"),
-    path("contact" , contact_page ,name= "Contact")
+    path("contact" , contact_page ,name= "Contact"),
+    path("newsletter" , newsletter_page ,name= "newsletter"),
+
 ]
