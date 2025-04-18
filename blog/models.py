@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-  
+from django.urls import reverse
+from taggit.managers import TaggableManager
 
 class category(models.Model):
     name = models.CharField(max_length=255)
@@ -11,7 +12,7 @@ class category(models.Model):
 class Post(models.Model):
     author = models.ForeignKey(User , on_delete=models.SET_NULL,null=True)
     image  = models.ImageField(upload_to="media/blog" , default="media/blog/default.jpg")
-    # tag
+    tags = TaggableManager()
     category = models.ManyToManyField(category)
     title = models.CharField(max_length=255)
     content = models.TextField()
@@ -32,3 +33,19 @@ class Post(models.Model):
  
     def __str__(self):
         return f" {self.id} - {self.title} "
+    
+    def get_absolute_url(self):
+        return reverse('blog:single',kwargs={'pid': self.id})
+
+class comments(models.Model):
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    subject = models.CharField(max_length=255)
+    message = models.TextField()
+    approved = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.name

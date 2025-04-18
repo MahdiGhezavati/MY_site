@@ -6,13 +6,16 @@ from django.core.paginator import Paginator , EmptyPage , PageNotAnInteger
 
 # code for get time and use in blog_page
 
-def blog_page(request , cate=None , author_user=None):
+def blog_page(request , cate=None , author_user=None , tag=None):
     time_now=timezone.localtime(timezone.now())
     posts = Post.objects.filter(poblished_date__lte=time_now , status = 1 )
     if cate:
         posts = posts.filter(category__name=cate)
     if author_user:
         posts = posts.filter(author__username = author_user)
+    if tag:
+        posts = posts.filter(tags__name=tag)
+    
     posts = Paginator(posts , 2)
     try:
         page_number=request.GET.get('page')
