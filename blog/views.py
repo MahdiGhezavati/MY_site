@@ -1,9 +1,10 @@
 from django.shortcuts import render , get_object_or_404
 from django.http import HttpResponse
-from blog.models import Post
+from blog.models import Post ,Comments
+from blog.forms import Commentform
 from django.utils import timezone
 from django.core.paginator import Paginator , EmptyPage , PageNotAnInteger
-
+from django.contrib import messages
 # code for get time and use in blog_page
 
 def blog_page(request , cate=None , author_user=None , tag=None):
@@ -29,11 +30,20 @@ def blog_page(request , cate=None , author_user=None , tag=None):
     return render(request, "blog/blog-home.html" , context)
 
 def single_page(request , pid):
+    if request.method == "POST":
+        form = Commentform(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request , messages.SUCCESS , " SUBMITED! " , extra_tags="succ")
+        else:
+            messages.add_message(request , messages.ERROR , "plaese try again ! " , extra_tags="error")
+    form = Commentform()
     #post = Post.objects.get(id = pid)
     time_now=timezone.localtime(timezone.now())
     posts = Post.objects.filter(poblished_date__lte=time_now , status = 1 ) 
     post = get_object_or_404(posts , pk=pid )
-    
+    # get comments
+    comments = Comments.objects.filter(post=post.id , approved=True)
     # this section for next post and prev post for single page 
     posts= Post.objects.filter(poblished_date__lte=time_now ,status=1)           
     lis=[]      
@@ -59,7 +69,7 @@ def single_page(request , pid):
         post.content_view += 1
         return post.save() 
     addview(post)
-    context = {"post":post , "next":list_next , "past":list_past} 
+    context = {"post":post , "comments":comments , "form":form ,"next":list_next , "past":list_past} 
     return render(request, "blog/blog-single.html" , context)
 
 def search_view(request):
