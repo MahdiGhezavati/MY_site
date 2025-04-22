@@ -3,7 +3,6 @@ from django.http import HttpResponse , HttpResponseRedirect
 from website.forms import Contactform , newsletterform 
 from django.contrib import messages
 
-
 def home_page(request):
     return render(request, "website/index.html")
 

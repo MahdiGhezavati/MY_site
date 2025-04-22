@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
     'blog.apps.BlogConfig',
+    "accounts.apps.AccountsConfig",
     "django.contrib.humanize",
     "django.contrib.sites",
     "django.contrib.sitemaps",
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     "taggit",
     "django_summernote",
     "captcha",
+    "bootstrap5",
 ]
 # sites framwork
 SITE_ID = 2

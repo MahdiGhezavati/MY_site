@@ -18,6 +18,7 @@ class Post(models.Model):
     content = models.TextField()
     content_view = models.IntegerField(default = 1)
     status = models.BooleanField(default=False)
+    login_require = models.BooleanField(default=False)
     poblished_date = models.DateTimeField(null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
