@@ -5,6 +5,8 @@ from django.contrib.auth import login , authenticate , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from accounts.forms import CustomUserForm
+from django.contrib.auth.models import User
+
 
 
 def login_view(request):
@@ -12,12 +14,21 @@ def login_view(request):
         if request.method == "POST":
             username = request.POST["username"]
             password = request.POST["password"]
-            user = authenticate(request , username=username , password=password)
-            if user is not None:
-                login(request,user)
-                return redirect('/')
+            if "@gmail.com" in username:
+                user_by_email = User.objects.filter(email=username).first()
+                user = authenticate(request , username=user_by_email , password=password)
+                if user is not None:
+                    login(request,user)
+                    return redirect('/')
+                else:
+                    messages.add_message(request , messages.ERROR , "plaese try again ! " , extra_tags="error")
             else:
-                messages.add_message(request , messages.ERROR , "plaese try again ! " , extra_tags="error")
+                user = authenticate(request , username=username , password=password)
+                if user is not None:
+                    login(request,user)
+                    return redirect('/')
+                else:
+                    messages.add_message(request , messages.ERROR , "plaese try again ! " , extra_tags="error")
     else:
         return redirect("/")
     return render(request,"accounts/login.html")
