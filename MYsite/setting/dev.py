@@ -1,8 +1,6 @@
 from MYsite.settings import *
 
 
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -26,8 +24,11 @@ DATABASES = {
     }
 }
 
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
-MEDIA_ROOT = BASE_DIR / 'media'
+
+MEDIA_URL = '/media/'
+#MEDIA_ROOT = BASE_DIR / 'media'
 
 STATICFILES_DIRS = [
     BASE_DIR / "statics"]
