@@ -7,14 +7,14 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from website.sitemaps import StaticViewSitemap
 from blog.sitemaps import BlogSitemap
-from MYsite.setting.dev import DEBUG
+from MYsite.settings import DEBUG
 from MYsite.view import *
 
 sitemaps = {
     "static": StaticViewSitemap,
     "blog": BlogSitemap , 
 }
-if DEBUG == False:
+if DEBUG == False :
     urlpatterns = [
         path('admin', admin.site.urls),
         path('', include("website.urls")),
